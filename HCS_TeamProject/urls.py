@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from portal.views import portal
+from portal.views import LoginView,ReturnView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/index/', permanent=False)),
     path('admin/', admin.site.urls),
-    path('index/', portal)
+    path('index/', LoginView.as_view(), name='login'),
+    path('form/', ReturnView.as_view(), name="form")
 ]
