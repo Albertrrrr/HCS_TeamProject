@@ -61,7 +61,7 @@
                             <label>{{ question }}</label>
                             {% if forloop.counter < 4 %}
                                 <!-- 使用 textarea 替代 input -->
-                                <textarea class="form-control" name="question{{ forloop.counter }}" placeholder="请输入您的答案" rows="3"></textarea> <!-- rows属性可以调整文本框的高度 -->
+                                <textarea class="form-control" name="question{{ forloop.counter }}" placeholder="Enter your answer" rows="3"></textarea> <!-- rows属性可以调整文本框的高度 -->
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -79,16 +79,16 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="successModalLabel">提交成功</h5>
+            <h5 class="modal-title" id="successModalLabel">Submission Successful</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            您的调查问卷已经结束！感谢您的配合
+            Your questionnaire has been closed! Thank you for your cooperation! Please contact the author if you have anything to share about other experiences.
           </div>
           <div class="modal-footer">
-            <a href="{% url 'login' %}" class="btn btn-primary">结束</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">FINISH</a>
           </div>
         </div>
       </div>

@@ -50,13 +50,13 @@ class SurveyView(View):
         6: 'G. Grayscale Filter',
     }
     questions = [
-        "该方案在多大程度上易于理解和使用？",
-        "你主观上感觉该方案有效性如何？",
-        "使用该方案在多大程度上令你感觉更安全？",
-        "你认为该方案在多大程度上会引起尴尬或社交不适？",
-        "你认为该方案的使用舒适度如何？",
-        "你在多大程度上可能会在实际生活中使用该方案？",
-        "你认为该方案是否有明显缺陷？（可选）"
+        "To what extent is the solution easy to understand and use?",
+        "How effective do you subjectively feel the solution is?",
+        "How far did using the solution make you feel safer?",
+        "To what extent do you think the solution will cause embarrassment or social discomfort?",
+        "What do you think about the comfort level of using the solution?",
+        "To what extent are you likely to use the solution in real life?",
+        "Do you see any obvious flaws in the solution? (Optional)"
     ]
 
     def get(self, request, page):
@@ -77,9 +77,9 @@ class SurveyView(View):
 
 class Quiz(View):
     questions = [
-        "该方案在多大程度上易于理解和使用？",
-        "你主观上感觉该方案有效性如何？",
-        "使用该方案在多大程度上令你感觉更安全？",
+        "Which solutions are you most satisfied with?",
+        "Which solutions are you least satisfied with?",
+        "Do you have any other comments about shoulder surfing?(Optional)",
     ]
 
     def get(self, request):

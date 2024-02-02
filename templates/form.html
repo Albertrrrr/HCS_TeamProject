@@ -61,14 +61,14 @@
                             <label>{{ question }}</label>
                             {% if forloop.counter < 7 %}
                                 <select class="form-control" name="question{{ forloop.counter }}">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="1">Very Dissatisfied</option>
+                                    <option value="2">Dissatisfied</option>
+                                    <option value="3">Neutral</option>
+                                    <option value="4">Satisfied</option>
+                                    <option value="5">Very Satisfied</option>
                                 </select>
                             {% else %}
-                                <input type="text" class="form-control" name="question{{ forloop.counter }}" placeholder="请输入您的答案">
+                                <input type="text" class="form-control" name="question{{ forloop.counter }}" placeholder="Enter your answer">
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -92,16 +92,16 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="successModalLabel">提交成功</h5>
+            <h5 class="modal-title" id="successModalLabel">Submission Successful</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            您的表单已成功提交！
+             Your form has been successfully submitted!
           </div>
           <div class="modal-footer">
-            <a href="{% url 'quiz' %}" class="btn btn-primary">继续</a>
+            <a href="{% url 'quiz' %}" class="btn btn-primary">Next</a>
           </div>
         </div>
       </div>
