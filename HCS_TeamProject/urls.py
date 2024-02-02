@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from portal.views import LoginView,SurveyView,FormDataSubmissionView
+from portal.views import LoginView,SurveyView,FormDataSubmissionView,Quiz
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
@@ -23,5 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', LoginView.as_view(), name='login'),
     path('form/<int:page>/', SurveyView.as_view(), name='form'),
-    path('submit-form/', FormDataSubmissionView.as_view(), name='submit_form')
+    path('submit-form/', FormDataSubmissionView.as_view(), name='submit_form'),
+    path('quiz/', Quiz.as_view(), name='quiz')
+
 ]

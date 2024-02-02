@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.shortcuts import render, redirect
-from portal.models import User,PageResponse
+from portal.models import User, PageResponse
 from django.http import JsonResponse
 import json
 
@@ -73,6 +73,45 @@ class SurveyView(View):
             'solution_name': solutionName
         }
         return render(request, 'form.html', context)
+
+
+class Quiz(View):
+    questions = [
+        "该方案在多大程度上易于理解和使用？",
+        "你主观上感觉该方案有效性如何？",
+        "使用该方案在多大程度上令你感觉更安全？",
+    ]
+
+    def get(self, request):
+        context = {
+            'questions': self.questions,
+        }
+
+        return render(request, 'quiz.html', context)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # 解析JSON格式的请求体数据
+            data = json.loads(request.body)
+            if hasattr(request, 'user') and request.user is not None:
+                page_response = PageResponse.objects.get(user=request.user)
+                # 将接收到的数据转换为JSON字符串并保存到quiz字段
+                page_response.quiz = json.dumps(data)
+                page_response.save()
+                print("已存入：", data)
+                # 返回确认信息
+                return JsonResponse({'status': 'success', 'message': 'Quiz responses updated successfully.'})
+
+            else:
+                # 如果用户未认证，返回错误信息
+                return JsonResponse({'status': 'error', 'message': 'User is not authenticated.'}, status=401)
+
+        except PageResponse.DoesNotExist:
+            # 如果找不到实例，返回错误信息
+            return JsonResponse({'status': 'error', 'message': 'PageResponse instance not found.'}, status=404)
+        except json.JSONDecodeError:
+            # 如果JSON解析失败，返回错误信息
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data received.'}, status=400)
 
 
 class LoginView(View):

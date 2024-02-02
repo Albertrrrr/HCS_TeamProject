@@ -38,6 +38,9 @@
                 flex-basis: 100%; /* Stack them on smaller screens */
             }
         }
+        #successModal .modal-header .close {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -98,7 +101,7 @@
             您的表单已成功提交！
           </div>
           <div class="modal-footer">
-            <a href="{% url 'login' %}" class="btn btn-primary">继续</a>
+            <a href="{% url 'quiz' %}" class="btn btn-primary">继续</a>
           </div>
         </div>
       </div>

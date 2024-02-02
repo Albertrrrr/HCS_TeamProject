@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            max-width: 960px; /* Adjust for screen size */
+            display: flex; /* Add this to make the container flex */
+            flex-wrap: wrap; /* Add this to allow items to wrap */
+        }
+        .gif-container img {
+            max-width: 100%; /* Adjusted for responsive design */
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        /* Flex adjustments */
+        .left-column, .right-column {
+            flex: 1; /* Each column takes equal width */
+        }
+        @media (max-width: 768px) { /* Responsive adjustment */
+            .left-column, .right-column {
+                flex-basis: 100%; /* Stack them on smaller screens */
+            }
+        }
+        #successModal .modal-header .close {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2> All Solutions </h2>
+        <div class="row">
+            <div class="col-md-6 left-column">
+                <div class="gif-container">
+                    <img src="https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF"  />
+                </div>
+            </div>
+            <div class="col-md-6 right-column">
+                <form id="surveyForm" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="currentPage" value="{{ page }}">
+                    {% for question in questions %}
+                        <div class="question">
+                            <label>{{ question }}</label>
+                            {% if forloop.counter < 4 %}
+                                <!-- 使用 textarea 替代 input -->
+                                <textarea class="form-control" name="question{{ forloop.counter }}" placeholder="请输入您的答案" rows="3"></textarea> <!-- rows属性可以调整文本框的高度 -->
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" onclick="submitAllFormData()">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">提交成功</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            您的调查问卷已经结束！感谢您的配合
+          </div>
+          <div class="modal-footer">
+            <a href="{% url 'login' %}" class="btn btn-primary">结束</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 引入jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 引入Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+           $(document).ready(function() {
+            function getCsrfToken() {
+                return $('input[name="csrfmiddlewaretoken"]').val();
+            }
+
+            function submitAllFormData() {
+                // 初始化formData为一个空对象，而不是之前的结构
+                var formData = {};
+
+                // 收集所有问题的答案，并直接将其添加到formData对象中
+                $('textarea').each(function() { // 注意这里改为textarea，如果您还有input[type="text"]，则需要添加回来
+                    var questionName = $(this).attr('name');
+                    var questionValue = $(this).val();
+                    formData[questionName] = questionValue; // 直接使用问题名称作为键，用户输入的答案作为值
+                });
+
+                // 发送AJAX POST请求到Django后端
+                $.ajax({
+                    url: '/quiz/', // 确保这是正确的URL
+                    type: 'POST',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", getCsrfToken());
+                    },
+                    success: function(response) {
+                        // 请求成功时的处理逻辑
+                        console.log('提交成功');
+                        $('#successModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        // 请求失败时的处理逻辑
+                        console.log('提交失败: ' + error);
+                    }
+                });
+            }
+
+            // 绑定点击事件到提交按钮
+            $('button[type="button"]').click(submitAllFormData);
+        });
+</script>
+
+
+</body>
+</html>
