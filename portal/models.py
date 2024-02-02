@@ -11,3 +11,14 @@ class User(models.Model):
         verbose_name = "user information"
         verbose_name_plural = verbose_name
         db_table = "user"
+
+class PageResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    page_1_responses = models.TextField()  # 或者使用 JSONField 如果你的数据库支持
+    page_2_responses = models.TextField()
+    page_3_responses = models.TextField()
+    page_4_responses = models.TextField()
+    page_5_responses = models.TextField()
+    page_6_responses = models.TextField()
+    quiz = models.TextField()
+

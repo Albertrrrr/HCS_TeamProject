@@ -16,7 +16,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -86,7 +85,6 @@ DATABASES = {
         "PASSWORD": "3022008a",
         "HOST": "34.147.244.155",
         "PORT": "3306"
-
     }
 }
 

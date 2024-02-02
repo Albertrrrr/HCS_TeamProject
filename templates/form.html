@@ -1,189 +1,222 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.101.0">
-    <title>Product example · Bootstrap v4.6</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/product/">
-
-    
-
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        body {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: #f5f5f5;
         }
-      }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            max-width: 960px; /* Adjust for screen size */
+            display: flex; /* Add this to make the container flex */
+            flex-wrap: wrap; /* Add this to allow items to wrap */
+        }
+        .gif-container img {
+            max-width: 100%; /* Adjusted for responsive design */
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        /* Flex adjustments */
+        .left-column, .right-column {
+            flex: 1; /* Each column takes equal width */
+        }
+        @media (max-width: 768px) { /* Responsive adjustment */
+            .left-column, .right-column {
+                flex-basis: 100%; /* Stack them on smaller screens */
+            }
+        }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h2> Solution: {{ solution_name }}</h2>
+        <div class="row">
+            <div class="col-md-6 left-column">
+                <div class="gif-container">
+                    <img src="{{ gif_url }}" alt="GIF for Page {{ page }}" />
+                </div>
+            </div>
+            <div class="col-md-6 right-column">
+                <form id="surveyForm" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="currentPage" value="{{ page }}">
+                    {% for question in questions %}
+                        <div class="question">
+                            <label>{{ question }}</label>
+                            {% if forloop.counter < 7 %}
+                                <select class="form-control" name="question{{ forloop.counter }}">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            {% else %}
+                                <input type="text" class="form-control" name="question{{ forloop.counter }}" placeholder="请输入您的答案">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        {% if prev_page %}
+                           <button type="button" class="btn btn-secondary" onclick="saveFormDataAndNavigate('{% url 'form' prev_page %}', {{ prev_page }})">Previous</button>
+                        {% endif %}
+                        {% if next_page %}
+                             <button type="button" class="btn btn-primary" onclick="saveFormDataAndNavigate('{% url 'form' next_page %}', {{ next_page }})">Next</button>
+                        {% else %}
+                             <button type="button" class="btn btn-success" onclick="submitAllFormData()">Submit</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="product.css" rel="stylesheet">
-  </head>
-  <body>
-    
-<nav class="site-header sticky-top py-1">
-  <div class="container d-flex flex-column flex-md-row justify-content-between">
-    <a class="py-2" href="#" aria-label="Product">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-    </a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Tour</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Product</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Features</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Enterprise</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
-  </div>
-</nav>
-
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-  <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 font-weight-normal">Punny headline</h1>
-    <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
-    <a class="btn btn-outline-secondary" href="#">Coming soon</a>
-  </div>
-  <div class="product-device shadow-sm d-none d-md-block"></div>
-  <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-</div>
-
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-    <div class="my-3 py-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
+    <!-- 模态框 -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">提交成功</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            您的表单已成功提交！
+          </div>
+          <div class="modal-footer">
+            <a href="{% url 'login' %}" class="btn btn-primary">继续</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 p-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-</div>
-
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 p-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-  <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-    <div class="my-3 py-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-</div>
-
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 p-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 py-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-</div>
-
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 p-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-    <div class="my-3 py-3">
-      <h2 class="display-5">Another headline</h2>
-      <p class="lead">And an even wittier subheading.</p>
-    </div>
-    <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-  </div>
-</div>
-
-<footer class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-      <small class="d-block mb-3 text-muted">&copy; 2017-2022</small>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Features</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Cool stuff</a></li>
-        <li><a class="text-muted" href="#">Random feature</a></li>
-        <li><a class="text-muted" href="#">Team feature</a></li>
-        <li><a class="text-muted" href="#">Stuff for developers</a></li>
-        <li><a class="text-muted" href="#">Another one</a></li>
-        <li><a class="text-muted" href="#">Last time</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Resources</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Resource</a></li>
-        <li><a class="text-muted" href="#">Resource name</a></li>
-        <li><a class="text-muted" href="#">Another resource</a></li>
-        <li><a class="text-muted" href="#">Final resource</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Resources</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Business</a></li>
-        <li><a class="text-muted" href="#">Education</a></li>
-        <li><a class="text-muted" href="#">Government</a></li>
-        <li><a class="text-muted" href="#">Gaming</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>About</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Team</a></li>
-        <li><a class="text-muted" href="#">Locations</a></li>
-        <li><a class="text-muted" href="#">Privacy</a></li>
-        <li><a class="text-muted" href="#">Terms</a></li>
-      </ul>
-    </div>
-  </div>
-</footer>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // 假设每个页面的数据都存储在独立的键中，格式为：formDataPage_X
+    function saveFormDataAndNavigate(nextPageUrl) {
+          var currentPage = document.getElementById('currentPage').value; // 读取当前页面编号
+        var formData = {};
+        var formElements = document.getElementById('surveyForm').elements;
+        for (var i = 0; i < formElements.length; i++) {
+            var element = formElements[i];
+            if (element.name) {
+                formData[element.name] = element.value;
+            }
+        }
+        localStorage.setItem('formDataPage_' + currentPage, JSON.stringify(formData));
+        window.location.href = nextPageUrl;
+    }
 
-      
-  </body>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentPage = document.getElementById('currentPage').value;
+        loadFormData(currentPage);
+    });
+
+    function saveCurrentPageData() {
+    // 假设当前页面是最后一页，即 page_6
+    var currentPage = 6; // 根据实际情况调整
+    var formData = {};
+    var formElements = document.getElementById('surveyForm').elements;
+    for (var i = 0; i < formElements.length; i++) {
+        var element = formElements[i];
+        if (element.name) {
+            formData[element.name] = element.value;
+        }
+    }
+    // 保存最后一页的数据
+    localStorage.setItem('formDataPage_' + currentPage, JSON.stringify(formData));
+}
+
+
+    function submitAllFormData() {
+        saveCurrentPageData(); // 确保最后一页的数据也被保存
+        var allFormData = {};
+        // 假设你有最多6页表单数据
+        for (var page = 0; page <= 7; page++) {
+            var pageDataString = localStorage.getItem('formDataPage_' + page);
+            if (pageDataString) {
+                allFormData['page_' + page] = JSON.parse(pageDataString);
+            }
+        }
+
+        console.log(allFormData); // 打印看看汇总的数据
+
+        // 这里使用fetch API发送所有页面的数据到服务器
+        fetch('/submit-form/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // 确保发送正确的CSRF令牌，如果使用了Django
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(allFormData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // 显示模态框
+            $('#successModal').modal('show');
+            // 清除LocalStorage中的数据
+            for (var page = 0; page <= 7; page++) {
+                localStorage.removeItem('formDataPage_' + page);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // 处理错误情况
+        });
+    }
+
+    // 辅助函数，用于从cookie中获取CSRF令牌
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function loadFormData(pageNumber) {
+        // 从localStorage中获取指定页面的表单数据
+        var pageDataString = localStorage.getItem('formDataPage_' + pageNumber);
+        if (pageDataString) {
+            var formData = JSON.parse(pageDataString);
+            var formElements = document.getElementById('surveyForm').elements;
+            for (var i = 0; i < formElements.length; i++) {
+                var element = formElements[i];
+                if (element.name && formData.hasOwnProperty(element.name)) {
+                    // 将数据填充回表单元素
+                    element.value = formData[element.name];
+                }
+            }
+        }
+    }
+</script>
+<!-- 引入jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 引入Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
 </html>

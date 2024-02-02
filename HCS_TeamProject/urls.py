@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from portal.views import LoginView,ReturnView
+from portal.views import LoginView,SurveyView,FormDataSubmissionView
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/index/', permanent=False)),
     path('admin/', admin.site.urls),
     path('index/', LoginView.as_view(), name='login'),
-    path('form/', ReturnView.as_view(), name="form")
+    path('form/<int:page>/', SurveyView.as_view(), name='form'),
+    path('submit-form/', FormDataSubmissionView.as_view(), name='submit_form')
 ]
