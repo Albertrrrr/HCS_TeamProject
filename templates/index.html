@@ -124,13 +124,15 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="inputEmail">email</label>
-                            <!-- 添加了name属性 -->
                             <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp" placeholder="enter your email">
                         </div>
                         <div class="form-group">
                             <label for="inputNickname">nickname</label>
-                            <!-- 添加了name属性 -->
                             <input type="text" class="form-control" id="inputNickname" name="nickname" placeholder="enter your nickname">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCode">Invitation Code</label>
+                            <input type="password" class="form-control" id="inputCode" name="code" placeholder="enter your code">
                         </div>
                         <button type="submit" class="btn btn-primary">submission</button>
                     </form>

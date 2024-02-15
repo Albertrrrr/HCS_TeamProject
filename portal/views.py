@@ -122,14 +122,18 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         email_value = request.POST.get('email', "")
         nickname = request.POST.get('nickname', "")
-        try:
-            if email_value and nickname:
-                user = User(email=email_value, nickname=nickname)
-                user.save()
-                request.session['user_id'] = user.id  # 保存ID 到Session
-                request.session['email'] = user.email
-                return JsonResponse({"success": True})
+        code = request.POST.get('code',"")
+        if code == "UofGHCS2024.":
+            try:
+                if email_value and nickname:
+                    user = User(email=email_value, nickname=nickname)
+                    user.save()
+                    request.session['user_id'] = user.id  # 保存ID 到Session
+                    request.session['email'] = user.email
+                    return JsonResponse({"success": True})
 
-        except IntegrityError:
-            # 指出email 已经存在
-            return JsonResponse({"error": "Email already used, please use another email address"}, status=400)
+            except IntegrityError:
+                # 指出email 已经存在
+                return JsonResponse({"error": "Email already used, please use another email address"}, status=400)
+        else:
+            return JsonResponse({"error": "Invitation Code error, please enter right code"}, status=400)
