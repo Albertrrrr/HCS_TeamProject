@@ -34,20 +34,20 @@ class FormDataSubmissionView(View):
 
 class SurveyView(View):
     gif_urls = {
-        1: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF',
-        2: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF',
-        3: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF',
-        4: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF',
-        5: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF',
-        6: 'https://storage.googleapis.com/hcsproject/2e134eda2c3612bde48d0492f66c2f75.GIF'
+        1: 'https://storage.googleapis.com/hcsproject/Alert-Icon.gif',
+        2: 'https://storage.googleapis.com/hcsproject/A_1%20-original-original.gif',
+        3: 'https://storage.googleapis.com/hcsproject/Front-LED-Flash.gif',
+        4: 'https://storage.googleapis.com/hcsproject/Fake-Text-Filter.gif',
+        5: 'https://storage.googleapis.com/hcsproject/Low-Brightness.gif',
+        6: 'https://storage.googleapis.com/hcsproject/Preset-modes-of-vibration-3.gif'
     }
     solution_list = {
         1: 'A. Alert Icon',
-        2: 'B. Crystalize Filter',
-        3: 'C. Dimming Filter',
+        2: 'B. Front Camera Preview',
+        3: 'C. Front LED Flash',
         4: 'D. Fake Text Filter',
-        5: 'E. Front Camera Preview',
-        6: 'G. Grayscale Filter',
+        5: 'E. Low Brightness',
+        6: 'F. Preset Modes Vibration',
     }
     questions = [
         "To what extent is the solution easy to understand and use?",
@@ -78,8 +78,9 @@ class SurveyView(View):
 class Quiz(View):
     questions = [
         "Which solutions are you most satisfied with?",
+        "Would you mind to explain the choice for the most satisfied ? (Optional)",
         "Which solutions are you least satisfied with?",
-        "Do you have any other comments about shoulder surfing?(Optional)",
+        "Would you mind to explain the choice for the least satisfied ? (Optional)",
     ]
 
     def get(self, request):
