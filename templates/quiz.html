@@ -16,12 +16,12 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            max-width: 960px; /* Adjust for screen size */
-            display: flex; /* Add this to make the container flex */
-            flex-wrap: wrap; /* Add this to allow items to wrap */
+            max-width: 960px;
+            display: flex;
+            flex-wrap: wrap;
         }
         .gif-container img {
-            max-width: 100%; /* Adjusted for responsive design */
+            max-width: 100%;
             height: auto;
             display: block;
             margin-bottom: 20px;
@@ -29,13 +29,13 @@
         .question {
             margin-bottom: 20px;
         }
-        /* Flex adjustments */
+
         .left-column, .right-column {
-            flex: 1; /* Each column takes equal width */
+            flex: 1;
         }
-        @media (max-width: 768px) { /* Responsive adjustment */
+        @media (max-width: 768px) {
             .left-column, .right-column {
-                flex-basis: 100%; /* Stack them on smaller screens */
+                flex-basis: 100%;
             }
         }
         #successModal .modal-header .close {
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-6 left-column">
                 <div class="gif-container">
-                    <img src="https://storage.googleapis.com/hcsproject/fusion-1.gif"  />
+                    <img src="https://storage.googleapis.com/ithcs/fusion-1.gif"  />
                 </div>
             </div>
             <div class="col-md-6 right-column">
@@ -60,7 +60,6 @@
                         <div class="question">
                             <label>{{ question }}</label>
                              {% if forloop.counter == 1 or forloop.counter == 3 %}
-                                <!-- 使用 textarea 替代 input -->
                                <select class="form-control" name="question{{ forloop.counter }}">
                                     <option value="A">A. Alert Icon</option>
                                     <option value="B">B. Front Camera Preview</option>
@@ -71,8 +70,7 @@
                                 </select>
                             {% endif %}
                             {% if forloop.counter == 2 or forloop.counter == 4 %}
-                                <!-- 使用 textarea 替代 input -->
-                                <textarea class="form-control" name="question{{ forloop.counter }}" placeholder="Enter your answer" rows="3"></textarea> <!-- rows属性可以调整文本框的高度 -->
+                                <textarea class="form-control" name="question{{ forloop.counter }}" placeholder="Enter your answer" rows="3"></textarea>
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -85,7 +83,6 @@
         </div>
     </div>
 
-    <!-- 模态框 -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -106,9 +103,7 @@
     </div>
 
 
-    <!-- 引入jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- 引入Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
            $(document).ready(function() {
@@ -117,20 +112,16 @@
             }
 
             function submitAllFormData() {
-                // 初始化formData为一个空对象，而不是之前的结构
                 var formData = {};
 
                $('.question').each(function(index) {
-                    // 为每个问题定义一个键，基于它们的顺序
-                    var questionKey = 'question' + (index + 1); // 索引从0开始，因此加1来匹配问题编号
+                    var questionKey = 'question' + (index + 1);
 
-                    // 检查并收集textarea的值（如果有）
                     var textarea = $(this).find('textarea');
                     if (textarea.length > 0) {
                         formData[questionKey] = textarea.val();
                     }
 
-                    // 检查并收集select的值（如果有）
                     var select = $(this).find('select');
                     if (select.length > 0) {
                         formData[questionKey] = select.val();
@@ -138,9 +129,8 @@
                 });
 
 
-                // 发送AJAX POST请求到Django后端
                 $.ajax({
-                    url: '/quiz/', // 确保这是正确的URL
+                    url: '/quiz/',
                     type: 'POST',
                     data: JSON.stringify(formData),
                     contentType: 'application/json; charset=utf-8',
@@ -149,18 +139,16 @@
                         xhr.setRequestHeader("X-CSRFToken", getCsrfToken());
                     },
                     success: function(response) {
-                        // 请求成功时的处理逻辑
-                        console.log('提交成功');
+                        console.log('Success');
                         $('#successModal').modal('show');
                     },
                     error: function(xhr, status, error) {
-                        // 请求失败时的处理逻辑
-                        console.log('提交失败: ' + error);
+                        console.log('Failed: ' + error);
                     }
                 });
             }
 
-            // 绑定点击事件到提交按钮
+
             $('button[type="button"]').click(submitAllFormData);
         });
 </script>

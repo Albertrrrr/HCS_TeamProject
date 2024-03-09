@@ -16,12 +16,12 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            max-width: 960px; /* Adjust for screen size */
-            display: flex; /* Add this to make the container flex */
-            flex-wrap: wrap; /* Add this to allow items to wrap */
+            max-width: 960px;
+            display: flex;
+            flex-wrap: wrap;
         }
         .gif-container img {
-            max-width: 100%; /* Adjusted for responsive design */
+            max-width: 100%;
             height: auto;
             display: block;
             margin-bottom: 20px;
@@ -29,13 +29,13 @@
         .question {
             margin-bottom: 20px;
         }
-        /* Flex adjustments */
+
         .left-column, .right-column {
-            flex: 1; /* Each column takes equal width */
+            flex: 1;
         }
-        @media (max-width: 768px) { /* Responsive adjustment */
+        @media (max-width: 768px) {
             .left-column, .right-column {
-                flex-basis: 100%; /* Stack them on smaller screens */
+                flex-basis: 100%;
             }
         }
         #successModal .modal-header .close {
@@ -109,9 +109,8 @@
 
 
     <script>
-    // 假设每个页面的数据都存储在独立的键中，格式为：formDataPage_X
     function saveFormDataAndNavigate(nextPageUrl) {
-          var currentPage = document.getElementById('currentPage').value; // 读取当前页面编号
+          var currentPage = document.getElementById('currentPage').value;
         var formData = {};
         var formElements = document.getElementById('surveyForm').elements;
         for (var i = 0; i < formElements.length; i++) {
@@ -130,8 +129,7 @@
     });
 
     function saveCurrentPageData() {
-    // 假设当前页面是最后一页，即 page_6
-    var currentPage = 6; // 根据实际情况调整
+    var currentPage = 6;
     var formData = {};
     var formElements = document.getElementById('surveyForm').elements;
     for (var i = 0; i < formElements.length; i++) {
@@ -140,15 +138,14 @@
             formData[element.name] = element.value;
         }
     }
-    // 保存最后一页的数据
+
     localStorage.setItem('formDataPage_' + currentPage, JSON.stringify(formData));
 }
 
 
     function submitAllFormData() {
-        saveCurrentPageData(); // 确保最后一页的数据也被保存
+        saveCurrentPageData();
         var allFormData = {};
-        // 假设你有最多6页表单数据
         for (var page = 0; page <= 7; page++) {
             var pageDataString = localStorage.getItem('formDataPage_' + page);
             if (pageDataString) {
@@ -156,14 +153,12 @@
             }
         }
 
-        console.log(allFormData); // 打印看看汇总的数据
+        console.log(allFormData);
 
-        // 这里使用fetch API发送所有页面的数据到服务器
         fetch('/submit-form/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 确保发送正确的CSRF令牌，如果使用了Django
                 'X-CSRFToken': getCookie('csrftoken'),
             },
             body: JSON.stringify(allFormData)
@@ -171,20 +166,16 @@
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            // 显示模态框
             $('#successModal').modal('show');
-            // 清除LocalStorage中的数据
             for (var page = 0; page <= 7; page++) {
                 localStorage.removeItem('formDataPage_' + page);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            // 处理错误情况
         });
     }
 
-    // 辅助函数，用于从cookie中获取CSRF令牌
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -201,7 +192,6 @@
     }
 
     function loadFormData(pageNumber) {
-        // 从localStorage中获取指定页面的表单数据
         var pageDataString = localStorage.getItem('formDataPage_' + pageNumber);
         if (pageDataString) {
             var formData = JSON.parse(pageDataString);
@@ -209,7 +199,6 @@
             for (var i = 0; i < formElements.length; i++) {
                 var element = formElements[i];
                 if (element.name && formData.hasOwnProperty(element.name)) {
-                    // 将数据填充回表单元素
                     element.value = formData[element.name];
                 }
             }

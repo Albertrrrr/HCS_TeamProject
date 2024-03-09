@@ -14,7 +14,7 @@ class User(models.Model):
 
 class PageResponse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    page_1_responses = models.TextField()  # 或者使用 JSONField 如果你的数据库支持
+    page_1_responses = models.TextField()
     page_2_responses = models.TextField()
     page_3_responses = models.TextField()
     page_4_responses = models.TextField()

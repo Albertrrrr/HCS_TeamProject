@@ -10,21 +10,18 @@ import json
 # Create your views here.
 class FormDataSubmissionView(View):
     def post(self, request, *args, **kwargs):
-        # 解析接收到的JSON数据
         try:
             data = json.loads(request.body)
             if hasattr(request, 'user') and request.user is not None:
-                # 处理数据，例如保存到数据库
                 response = PageResponse(user=request.user)
                 for page, page_data in data.items():
                     page_data.pop('csrfmiddlewaretoken', None)
                     json_data = json.dumps(page_data)
                     if hasattr(response, f'{page}_responses'):
                         setattr(response, f'{page}_responses', json_data)
-                    print("已保存：" + f"Processing {page}: {page_data}")
+                    print("Save：" + f"Processing {page}: {page_data}")
 
                 response.save()
-                # 现在可以直接使用request.user
                 print("Current user id: ", request.user.id)
 
             return JsonResponse({'status': 'success', 'message': 'Data processed successfully.'})
@@ -34,12 +31,12 @@ class FormDataSubmissionView(View):
 
 class SurveyView(View):
     gif_urls = {
-        1: 'https://storage.googleapis.com/hcsproject/Alert-Icon.gif',
-        2: 'https://storage.googleapis.com/hcsproject/A_1%20-original-original.gif',
-        3: 'https://storage.googleapis.com/hcsproject/Front-LED-Flash.gif',
-        4: 'https://storage.googleapis.com/hcsproject/Fake-Text-Filter.gif',
-        5: 'https://storage.googleapis.com/hcsproject/Low-Brightness.gif',
-        6: 'https://storage.googleapis.com/hcsproject/Preset-modes-of-vibration-3.gif'
+        1: 'https://storage.googleapis.com/ithcs/Alert-Icon.gif',
+        2: 'https://storage.googleapis.com/ithcs/A_1%20-original-original.gif',
+        3: 'https://storage.googleapis.com/ithcs/Front-LED-Flash.gif',
+        4: 'https://storage.googleapis.com/ithcs/Fake-Text-Filter.gif',
+        5: 'https://storage.googleapis.com/ithcs/Low-Brightness.gif',
+        6: 'https://storage.googleapis.com/ithcs/Preset-modes-of-vibration-3.gif'
     }
     solution_list = {
         1: 'A. Alert Icon',
@@ -92,26 +89,22 @@ class Quiz(View):
 
     def post(self, request, *args, **kwargs):
         try:
-            # 解析JSON格式的请求体数据
             data = json.loads(request.body)
             if hasattr(request, 'user') and request.user is not None:
                 page_response = PageResponse.objects.get(user=request.user)
-                # 将接收到的数据转换为JSON字符串并保存到quiz字段
                 page_response.quiz = json.dumps(data)
                 page_response.save()
-                print("已存入：", data)
-                # 返回确认信息
+                print("Save：", data)
                 return JsonResponse({'status': 'success', 'message': 'Quiz responses updated successfully.'})
 
             else:
-                # 如果用户未认证，返回错误信息
                 return JsonResponse({'status': 'error', 'message': 'User is not authenticated.'}, status=401)
 
         except PageResponse.DoesNotExist:
-            # 如果找不到实例，返回错误信息
+
             return JsonResponse({'status': 'error', 'message': 'PageResponse instance not found.'}, status=404)
         except json.JSONDecodeError:
-            # 如果JSON解析失败，返回错误信息
+
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON data received.'}, status=400)
 
 
@@ -128,12 +121,12 @@ class LoginView(View):
                 if email_value and nickname:
                     user = User(email=email_value, nickname=nickname)
                     user.save()
-                    request.session['user_id'] = user.id  # 保存ID 到Session
+                    request.session['user_id'] = user.id
                     request.session['email'] = user.email
                     return JsonResponse({"success": True})
 
             except IntegrityError:
-                # 指出email 已经存在
+
                 return JsonResponse({"error": "Email already used, please use another email address"}, status=400)
         else:
             return JsonResponse({"error": "Invitation Code error, please enter right code"}, status=400)

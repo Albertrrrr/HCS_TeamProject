@@ -53,20 +53,19 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- 网页头部 -->
+
         <header class="mb-4">
             <div class="d-flex align-items-center">
-                <img src="https://storage.googleapis.com/hcsproject/UoG_colour.png" alt="Logo" style="height: 60px;"> <!-- Logo 图片 -->
+                <img src="https://storage.googleapis.com/hcsproject/UoG_colour.png" alt="Logo" style="height: 60px;">
                 <div class="ml-3">
                     <h3>School of Computing Science</h3>
                     <p>HCS Team Project</p>
                 </div>
             </div>
         </header>
-        <!-- 轮播图上方的标题 -->
         <h2 class="text-center mb-4">What's the shoulder surfing?</h2>
 
-        <!-- 轮播图 -->
+
         <div id="carouselExampleIndicators" class="carousel slide mb-4" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -75,13 +74,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://storage.googleapis.com/hcsproject/lunbo-figure-1.PNG" class="d-block w-100" alt="...">
+                    <img src="https://storage.googleapis.com/ithcs/lunbo-figure-1.PNG" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://storage.googleapis.com/hcsproject/lunbo-figure-2.PNG" class="d-block w-100" alt="...">
+                    <img src="https://storage.googleapis.com/ithcs/lunbo-figure-2.PNG" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://storage.googleapis.com/hcsproject/lunbo-figure-3.PNG" class="d-block w-100" alt="...">
+                    <img src="https://storage.googleapis.com/ithcs/lunbo-figure-3.PNG" class="d-block w-100" alt="...">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -94,23 +93,95 @@
             </a>
         </div>
         <p class="font-weight-normal">The ubiquity of mobile devices brings a lot of benefits to users, but it also exposes them to shoulder surfing.Shoulder surfing – a physical type of social engineering attacks – refers to the act of observing the devicescreen of other people without their permission. Shoulder surfing can occur anywhere where a device isused due to which anyone can be the shoulder surfer, such as strangers, family members, friends, colleagues,or intimate partners.</p>
-        <!-- 项目介绍部分 -->
-        <div class="jumbotron">
-            <h3 class="display">A social survey on preventive measures for shoulder surfing</h3>
-            <p class="font-weight-normal">This is our questionnaire project description. Please read the project information carefully and then start to participate in the questionnaire.</p>
-            <hr class="my-4">
-            <a href="https://en.wikipedia.org/wiki/Shoulder_surfing_(computer_security)">More details</a>
-            <p></p>
-            <!-- “开始”按钮 -->
-            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal">START</button>
-        </div>
+
+
+            <div class="jumbotron">
+                <h3 class="display">A social survey on preventive measures for shoulder surfing</h3>
+                <p class="font-weight-normal">This is our questionnaire project description. Please read the project information carefully and then start to participate in the questionnaire.</p>
+                <hr class="my-4">
+                <p></p>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="termsAgreement">
+                  <label class="form-check-label" for="termsAgreement">
+                    Please review our <a href="#" data-toggle="modal" data-target="#privacyPolicyModal">Privacy Policy</a> to understand how we handle your data. By continuing, you agree to these terms and please tick the box.
+                  </label>
+                </div>
+                <button id="startButton" style="margin-top: 50px" class="btn btn-primary btn-lg">START</button>
+            </div>
+
+            <div class="modal fade" id="privacyPolicyModal" tabindex="-1" aria-labelledby="privacyPolicyModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="privacyPolicyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <h2>Privacy Policy</h2>
+
+                    <p>Welcome to our project. We are committed to <strong>protecting your privacy and personal data</strong>. This Privacy Policy is designed to inform you, as a participant, of your rights and how we handle your data.</p>
+
+                    <h3>Participant Protection</h3>
+
+                    <p>We guarantee that you will not face any risks beyond those common in everyday life during the research process. We have a responsibility to <strong>protect you from both physical and mental harm</strong>, including, but not limited to, investigations conducted in non-standard environments or those requiring mobility or the use of non-standard equipment.</p>
+                    <p>All experimental materials used are either paper-based or software running on standard hardware, posing no risk associated with non-standard equipment.</p>
+
+                    <h3>Consent and Participation</h3>
+
+                    <p>Your participation is entirely based on <strong>explicit consent</strong>. We will use your data for the project only after obtaining your explicit consent. If the project results are likely to be used long-term, we will request you sign a <strong>written consent form</strong>. Otherwise, verbal consent is sufficient and will be explicitly requested at the start of the project.</p>
+                    <p>We have not offered any incentives to participants to ensure your voluntary participation without taking on additional risks for compensation.</p>
+                    <p>We guarantee no information about the evaluation or materials will be intentionally withheld from you. Misleading participants or withholding information is unacceptable.</p>
+
+                    <h3>Age and Capacity</h3>
+
+                    <p>We do not accept participation from individuals under the age of 16 unless <strong>parental consent</strong> is obtained.</p>
+                    <p>Similarly, for participants who may have impairments that limit their understanding or communication, we will require <strong>additional consent</strong>.</p>
+
+                    <h3>Rights and Contact</h3>
+
+                    <p>You have the right to <strong>withdraw from participation at any time</strong> and can contact us whenever necessary. We ensure all participants are aware of this right at the beginning of the study.</p>
+                    <p>We guarantee that neither the researchers nor their supervisors will exert any authority or influence pressure on any participant.</p>
+                    <p>All participants will have the opportunity to discuss and ask questions at the end of the study. We will provide sufficient information to ensure you fully understand the nature of the research.</p>
+
+                    <h3>Data Storage and Security</h3>
+
+                    <p>We commit to storing all data collected from participants in an <strong>anonymous form</strong>, ensuring your privacy and security.</p>
+                      <h3>Special Notice: email</h3>
+                      <p>In the context of our questionnaire, we collect your email address and use it as a primary key for the purpose of uniquely identifying participants throughout the study. This practice allows us to accurately track each participant's response, ensuring data integrity and accuracy. Below is a detailed explanation of this practice and how we ensure that this information is not used for any other unauthorised purposes.</p>
+                       <h4>Transparency and Purpose</h4>
+                        <ul>
+                            <li><strong>Identifying Participants:</strong> The sole purpose of using your email address as a primary key is to identify and manage participant data throughout the research process. This approach ensures the accurate attribution of survey responses to the correct participant, while avoiding duplicate submissions.</li>
+                            <li><strong>Data Accuracy:</strong> Identifying participants through their email addresses allows us to maintain high accuracy and consistency in the survey data, which is crucial for the effectiveness and reliability of the research.</li>
+                        </ul>
+
+                        <h4>Use Limitations and Consent</h4>
+                        <ul>
+                            <li><strong>Limited Use:</strong> We commit to using your email address solely for the purpose of the survey. It will not be used for any other activities, including marketing emails or any form of communication without your consent.</li>
+                            <li><strong>Obtaining Consent:</strong> Before collecting your email address, we will clearly inform you that it will be used as the primary key for the survey, and it will only be collected after obtaining your explicit consent.</li>
+                        </ul>
+
+                        <h4>Security and Privacy</h4>
+                        <ul>
+                            <li><strong>Data Protection:</strong> We have implemented robust data protection measures to prevent unauthorized access, disclosure, or other forms of improper processing. Your email address and survey data will be securely stored, with access strictly limited to authorized personnel.</li>
+                            <li><strong>Rights Protection:</strong> We fully respect your privacy and data protection rights. You have the right to know how your data is used and to request the correction or deletion of your personal information at any time.</li>
+                        </ul>
+                      <p>This Privacy Policy is intended to comprehensively protect your privacy and personal information. We appreciate your participation and trust. If you have any questions or need more information, please contact us through the portal page</p>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
     </div>
 
-    <!-- 注册页面的模态框 -->
     <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
         <div id="errorContainer" class="alert alert-danger" style="display: none;"></div>
 
-        <div class="modal-dialog" role="document">
+        <div id="nextModal" class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="registerModalLabel">Sign in</h5>
@@ -119,12 +190,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-    <!-- 注意action属性应指向Django的URL配置中相应的视图 -->
+
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="inputEmail">email</label>
                             <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp" placeholder="enter your email">
+                            <text style="color:#800000">* We comply with the GDPR with respect to personal data</text>
                         </div>
                         <div class="form-group">
                             <label for="inputNickname">nickname</label>
@@ -140,9 +212,9 @@
             </div>
         </div>
     </div>
-     <!-- 作者标题 -->
+
         <h2 class="authors-title">Authors</h2>
-      <!-- 个人卡片 -->
+
         <div class="row" align="center">
             <div class="col-12 col-md-6">
                 <div class="card-container">
@@ -184,47 +256,72 @@
             </div>
     </div>
 
+    <div class="modal fade" id="termsAlertModal" tabindex="-1" role="dialog" aria-labelledby="termsAlertModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="termsAlertModalLabel">Privacy Policy Agreement Required</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            You must agree to our privacy policy and conditions before proceeding.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <script>
-      $(document).ready(function(){
-        // 绑定表单提交事件处理器
-        $("#registerModal form").submit(function(event){
-            event.preventDefault(); // 阻止表单的默认提交行为
+<script>
+document.getElementById('startButton').addEventListener('click', function(event) {
+  var checkbox = document.getElementById('termsAgreement');
+  if (!checkbox.checked) {
+    // Prevent the default action of the button (which might include submitting a form or showing another modal)
+    event.preventDefault();
+    // Show the termsAlertModal because the checkbox is not checked
+    $('#termsAlertModal').modal('show');
+  } else {
+    // If the checkbox is checked, explicitly show the registerModal
+    $('#registerModal').modal('show');
+  }
+});
 
-            // 隐藏之前的错误消息
-            $("#errorContainer").hide();
+$(document).ready(function(){
+    $("#registerModal form").submit(function(event){
+        event.preventDefault();
+        $("#errorContainer").hide();
 
-            $.ajax({
-                url: $(this).attr("action"), // 获取表单action属性中的URL
-                type: "post",
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(data) {
-                    if(data.error){
-                        // 显示错误消息
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "post",
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(data) {
+                if(data.error){
 
-                    } else {
-                        // 关闭模态框
-                        $('#registerModal').modal('hide');
-                        window.location.href = "/form/1";
-                    }
-                },
-                error: function(xhr, errmsg, err) {
-                    // 错误处理
-                    var responseData = JSON.parse(xhr.responseText);
-                    var errorMessage = responseData.error;
-                    $("#errorContainer").text(errorMessage).show();
+                } else {
 
+                    $('#registerModal').modal('hide');
+                    window.location.href = "/form/1";
                 }
-            });
+            },
+            error: function(xhr, errmsg, err) {
+                var responseData = JSON.parse(xhr.responseText);
+                var errorMessage = responseData.error;
+                $("#errorContainer").text(errorMessage).show();
+            }
         });
     });
-        </script>
+});
+</script>
 
-    <!-- 引入 Bootstrap JavaScript (依赖于 jQuery 和 Popper.js) -->
 
 </body>
 </html>
