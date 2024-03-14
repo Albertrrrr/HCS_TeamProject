@@ -30,9 +30,8 @@ We recommend the following software to manage the database：
 * Datagrip
 
 ### Run
-This project is based on Django REST Framework, Redis, and you should start the service with the following command.
+This project is based on Django, and you should start the service with the following command.
 #### Notice
-* You must ensure that your Redis service is turned on.
 * Your pip requirements are all installed.
 
 ```
